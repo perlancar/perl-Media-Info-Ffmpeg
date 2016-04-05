@@ -56,7 +56,7 @@ sub get_media_info {
         unless $stderr =~ /^Input \#0/m;
 
     my $info = {};
-    $info->{duration}      = $1*3600+$2*60+$3 if $stdout =~ /^\s*Duration: (\d+):(\d+):(\d+\.\d+)/m;
+    $info->{duration}      = $1*3600+$2*60+$3 if $stderr =~ /^\s*Duration: (\d+):(\d+):(\d+\.\d+)/m;
 
     # XXX multiple video streams info
     if ($stderr =~ /^\s*Stream[^:]+: Video: (.+)/m) {
