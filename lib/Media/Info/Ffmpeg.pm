@@ -59,7 +59,7 @@ sub get_media_info {
     $info->{duration}      = $1*3600+$2*60+$3 if $stderr =~ /^\s*Duration: (\d+):(\d+):(\d+\.\d+)/m;
 
     # XXX multiple video streams info
-    if ($stderr =~ /^\s*Stream[^:]+: Video: (.+)/m) {
+    if ($stderr =~ /^\s*Stream.+?: Video: (.+)/m) {
         my $video_info = $1;
         $video_info =~ /^(\w+)/; $info->{video_format} = uc($1);
         $video_info =~ /(\d+)x(\d+)/ and do {
@@ -71,7 +71,7 @@ sub get_media_info {
     }
 
     # XXX multiple audio streams info
-    if ($stderr =~ /\s*Stream[^:]+: Audio: (.+)/m) {
+    if ($stderr =~ /\s*Stream.+?: Audio: (.+)/m) {
         my $audio_info = $1;
         $audio_info =~ /^(\w+)/; $info->{audio_format} = uc($1);
         $audio_info =~ /(\d+(?:\.\d+)?) Hz/ and $info->{audio_rate} = $1;
