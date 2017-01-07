@@ -1,5 +1,3 @@
-Revision history for Media-Info-Ffmpeg
-
 0.004   2016-11-28 (PERLANCAR)
 
         - [bugfix] Fix regex (thanks Scott Givan) [RT#118986].
