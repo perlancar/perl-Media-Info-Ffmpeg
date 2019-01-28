@@ -62,7 +62,7 @@ sub get_media_info {
     if ($stderr =~ /^\s*Stream.+?: Video: (.+)/m) {
         my $video_info = $1;
         $video_info =~ /^(\w+)/; $info->{video_format} = uc($1);
-        $video_info =~ /(\d+)x(\d+)/ and do {
+        $video_info =~ /(\d+)x(\d+),/ and do {
             $info->{video_width}  = $1;
             $info->{video_height} = $2;
         };
