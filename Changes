@@ -1,3 +1,8 @@
+0.007   2019-01-28 (PERLANCAR)
+
+	- Tweak regex once again to get the correct width/height.
+
+
 0.006   2019-01-28 (PERLANCAR)
 
 	- Add 'rotate' information.
