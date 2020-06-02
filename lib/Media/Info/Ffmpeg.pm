@@ -49,7 +49,7 @@ sub get_media_info {
 
     my ($stdout, $stderr, $exit) = capture {
         local $ENV{LANG} = "C";
-        system("ffmpeg", "-i", $media);
+        system("ffmpeg", "-i", $media); # ffprobe produces the same output
     };
 
     return err(500, "ffmpeg doesn't show information")
