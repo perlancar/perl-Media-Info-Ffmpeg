@@ -1,3 +1,10 @@
+0.008   2020-06-02  Released-By: PERLANCAR; Urgency: medium
+
+	- Add fields: video_orientation, video_dar, video_sar.
+
+	- Add comment about ffprobe and ffmpeg -i being the same.
+
+
 0.007   2019-01-28  Released-By: PERLANCAR
 
 	- Tweak regex once again to get the correct width/height.
