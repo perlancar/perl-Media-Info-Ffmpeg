@@ -1,6 +1,8 @@
 package Media::Info::Ffmpeg;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -59,7 +61,7 @@ sub get_media_info {
     $info->{duration}      = $1*3600+$2*60+$3 if $stderr =~ /^\s*Duration: (\d+):(\d+):(\d+\.\d+)/m;
     $info->{rotate}        = $1 if $stderr =~ /^\s*rotate\s*:\s*(.+)/m;
 
-    # XXX multiple video streams info
+    # XXX what about multiple video streams info?
     if ($stderr =~ /^\s*Stream.+?: Video: (.+)/m) {
         my $video_info = $1;
         $video_info =~ /^(\w+)/; $info->{video_format} = uc($1);
@@ -67,11 +69,28 @@ sub get_media_info {
             $info->{video_width}  = $1;
             $info->{video_height} = $2;
         };
+        $video_info =~ /DAR ((\d+):(\d+))/ and do {
+            $info->{video_dar} = $1;
+            # portrait, adjust width & height to reflect this
+            if ($2 < $3) {
+                $info->{video_orientation} = 'portrait';
+                if ($info->{video_width} > $info->{video_height}) {
+                    ($info->{video_width}, $info->{video_height}) =
+                        ($info->{video_height}, $info->{video_width});
+                }
+            } else {
+                $info->{video_orientation} = 'landscape';
+            }
+        };
+        $video_info =~ /SAR ((\d+):(\d+))/ and do {
+            $info->{video_sar} = $1;
+        };
+
         $video_info =~ /(\d+(?:\.\d+)?) fps/ and $info->{video_fps} = $1;
         $video_info =~ m!(\d+(?:\.\d+)?) kb/s! and $info->{video_bitrate} = $1*1024;
     }
 
-    # XXX multiple audio streams info
+    # XXX what about multiple audio streams info?
     if ($stderr =~ /\s*Stream.+?: Audio: (.+)/m) {
         my $audio_info = $1;
         $audio_info =~ /^(\w+)/; $info->{audio_format} = uc($1);
